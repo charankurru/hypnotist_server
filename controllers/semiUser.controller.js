@@ -3,6 +3,7 @@ const passport = require('passport');
 const _ = require('lodash');
 const { attempt } = require('lodash');
 const { getfeed } = require('./user.controller');
+const { json } = require('body-parser');
 
 const User = mongoose.model('User');
 const postfeed = mongoose.model('Postfeed');
@@ -139,17 +140,55 @@ module.exports = {
     await User.findOne({
       fullName: req.params.naam,
     })
-      .populate('ChatList.receiverId')
-      .populate('ChatList.msgId')
-      .populate('followings.userfollowing')
-      .populate('followers.follower')
+      .populate('favlist.favoneId')
       .then((record) => {
+
         res.status(200).json({ message: 'user Found', record });
       })
       .catch((err) => {
         res.status(400).json({ message: 'went wrong with finding !' });
       });
   },
+
+  async addfavdoctor(req, res) {
+    User.find(
+      {
+        favlist: {
+          $elemMatch: { favoneId: req.body._id },
+        }
+      }, async (err, result) => {
+        console.log(result);
+        if (result.length > 0) {
+          return res.status(200).json({ message: "already added to fav" })
+        }
+        else if (result.length <= 0) {
+
+          User.update(
+            { _id: req._id },
+            {
+              $push: {
+                favlist: {
+                  favoneId: req.body._id,
+                  favname: req.body.fullName,
+                },
+              },
+            }
+          ).then((record) => {
+            res.status(200).json({ message: "Added to fav", record })
+          })
+            .catch(err => {
+              res.status(400).json({ message: "error occureed" })
+            })
+        }
+        if (err) {
+          console.log(err);
+          // return res.status(200).json({ message: 'updated successfully', result });  
+        }
+
+      });
+
+  },
+
   async postfeed(req, res) {
     console.log('from noew');
     console.log(req.body);

@@ -19,21 +19,28 @@ var userSchema = new mongoose.Schema({
   },
   saltSecret: String,
 
-  posts: [
+  appointments: [
     {
-      postId: { type: mongoose.Schema.Types.ObjectId, ref: 'postfeed' },
-      post: { type: String },
+      appointmentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Appointment' },
+      problem: { type: String, default: '' },
+      appointmentDate: { type: String, default: '' },
+      sessionTimings: { type: String, default: '' },
+      doctorname: { type: String },
       created: { type: Date, default: Date.now() },
     },
   ],
 
-  followings: [
-    { userfollowing: { type: mongoose.Schema.Types.ObjectId, ref: 'User' } },
+  DoctorsList: [
+    { Doctor: { type: mongoose.Schema.Types.ObjectId, ref: 'doctor' } },
   ],
 
-  followers: [
-    { follower: { type: mongoose.Schema.Types.ObjectId, ref: 'User' } },
+  favlist: [
+    {
+      favoneId: { type: mongoose.Schema.Types.ObjectId, ref: 'doctor' },
+      favname: { type: String, default: '' }
+    },
   ],
+
   notifications: [
     {
       senderId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -44,20 +51,13 @@ var userSchema = new mongoose.Schema({
       date: { type: String, default: '' },
     },
   ],
-  ChatList: [
-    {
-      receiverId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-      msgId: { type: mongoose.Schema.Types.ObjectId, ref: 'Message' },
-    },
-  ],
-  picVersion: { type: String, default: '1592916353' },
-  picId: { type: String, default: 'v31avvznqcfkzbor3aod.jpg' },
-  images: [
-    {
-      imgId: { type: String, default: '' },
-      imgVersion: { type: String, default: '' },
-    },
-  ],
+  // ChatList: [
+  //   {
+  //     receiverId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  //     msgId: { type: mongoose.Schema.Types.ObjectId, ref: 'Message' },
+  //   },
+  // ],
+
 });
 
 // Custom validation for email
