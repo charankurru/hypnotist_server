@@ -34,4 +34,6 @@ googleuserSchema.methods.generateJwt = function () {
     );
 };
 
+googleuserSchema.set('autoIndex', false);
+
 module.exports = mongoose.model('GoogleUser', googleuserSchema);
