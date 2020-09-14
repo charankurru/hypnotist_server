@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 const ObjectId = require('mongoose');
 
-mongoose.connect(process.env.MONGODB_URI, (err) => {
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+};
+
+mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://charan:bharathi@cluster0-2hbtz.mongodb.net/chatapp?retryWrites=true&w=majority", options, (err) => {
   if (!err) {
     console.log('MongoDB connection succeeded.');
   } else {
@@ -13,3 +18,4 @@ mongoose.connect(process.env.MONGODB_URI, (err) => {
 
 require('./user.model');
 require('./postfeedmodel');
+
