@@ -51,6 +51,6 @@ app.use((err, req, res, next) => {
 });
 
 // start server
-server.listen('5000', () =>
+server.listen(process.env.PORT || '5000', () =>
   console.log(`Server started at port : 5000`)
 );
