@@ -5,7 +5,8 @@ const { attempt } = require('lodash');
 const jwt = require('jsonwebtoken')
 
 //Models
-const User = mongoose.model('User');
+const User = require("../models/user.model")
+const postfeed = require("../models/postfeedmodel");
 const googleUser = require('../models/googlemodel');
 const doctor = require('../models/Doctor.model');
 

@@ -5,8 +5,8 @@ const { attempt } = require('lodash');
 const jwt = require('jsonwebtoken')
 
 
-const User = mongoose.model('User');
-const postfeed = mongoose.model('Postfeed');
+const User = require("../models/user.model")
+const postfeed = require("../models/postfeedmodel");
 const googleUser = require('../models/googlemodel');
 
 module.exports.register = (req, res, next) => {

@@ -4,8 +4,8 @@ const _ = require('lodash');
 const { attempt } = require('lodash');
 const { getfeed } = require('./user.controller');
 
-const User = mongoose.model('User');
-const postfeed = mongoose.model('Postfeed');
+const User = require("../models/user.model")
+const postfeed = require("../models/postfeedmodel");
 const appointment = require('../models/take-appoint.model');
 const doctor = require('../models/Doctor.model');
 

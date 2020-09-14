@@ -17,13 +17,9 @@ const imageIndex = require('./routes/imageIndex');
 var app = express();
 
 //DAtabase connection
-// mongoose.connect(
-//   'mongodb+srv://charan:bharathi@cluster0-2hbtz.mongodb.net/chatapp?retryWrites=true&w=majority',
-//   {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   }
-// );
+mongoose.connect(
+  'mongodb+srv://charan:bharathi@cluster0-2hbtz.mongodb.net/chatapp?retryWrites=true&w=majority',
+);
 
 // middleware
 app.use(express.json({ limit: '50mb' }));

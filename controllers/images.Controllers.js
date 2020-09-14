@@ -6,8 +6,8 @@ var cloudinary = require('cloudinary');
 
 const helper = require('../config/helpers');
 
-const User = mongoose.model('User');
-const postfeed = mongoose.model('Postfeed');
+const User = require("../models/user.model")
+const postfeed = require("../models/postfeedmodel");
 const conversation = require('../models/conversationModel');
 const message = require('../models/MessageModel');
 

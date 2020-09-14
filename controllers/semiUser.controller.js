@@ -5,9 +5,8 @@ const { attempt } = require('lodash');
 const { getfeed } = require('./user.controller');
 const { json } = require('body-parser');
 
-const User = mongoose.model('User');
-const postfeed = mongoose.model('Postfeed');
-
+const User = require("../models/user.model")
+const postfeed = require("../models/postfeedmodel");
 module.exports = {
   UnFollowUser(req, res) {
     const unfollow = async () => {
