@@ -19,16 +19,8 @@ var doctorSchema = new mongoose.Schema({
     },
     saltSecret: String,
 
-    qualification: {
-        type: String,
-        default: ''
-        // required: "qualification can't be empty",
-    },
-
-    Speciality: {
-        type: String,
-        default: ''
-        // required: "Speciality can't be empty",
+    doctorDetails: {
+        detailsId: { type: mongoose.Schema.Types.ObjectId, ref: 'DocDetail' }
     },
 
     imgUrl: {

@@ -9,6 +9,7 @@ const postfeed = require("../models/postfeedmodel");
 const appointment = require('../models/take-appoint.model');
 const doctor = require('../models/Doctor.model');
 
+
 module.exports = {
 
     async postappointment(req, res) {
@@ -63,7 +64,7 @@ module.exports = {
 
 
     async getappointements(req, res, next) {
-        await User.findOne({
+        await User.find({
             _id: req._id,
         })
             .populate('appointments.appointmentId')
@@ -85,15 +86,12 @@ module.exports = {
         // console.log(reqdata);
         // console.log(reqdata.sessionsArr[0].session)
         const tresh = reqdata.sessionsArr.length;
-        appointment.find({ doctorId: reqdata.id },
-            // {
-            //     $and: [
-            //         { "appointments.appointmentDate": "2020-09-11T11:21:14.300+05:30" },
-            //         { "appointments.sessionTimings": "9am-11am" }
-            //     ]
-            // }
-            { "appointments.appointmentDate": "2020-09-11T11:21:14.300+05:30" }
-
+        appointment.find({
+            $and: [
+                { doctorId: reqdata.id },
+                { appointmentDate: reqdata.date }
+            ]
+        }
             , async (err, result) => {
                 const obj = JSON.stringify(result)
                 const jsObj = JSON.parse(obj);
@@ -112,28 +110,31 @@ module.exports = {
                 }
                 else if (jsObj.length > 0) {
                     // big function
-                    const freetimmings = [];
+
+
                     for (i = 0; i < tresh; i++) {
-                        await appointment.find({ doctorId: reqdata.id }, {
-                            $and: [
-                                { "appointments.appointmentDate": reqdata.appointmentDate },
-                                { "appointments.sessionTimings": reqdata.sessionsArr[i].session }
-                            ]
-                        }, async (err, record) => {
+                        console.log("ok" + i);
 
-                            const iterobj = JSON.stringify(record)
-                            const iterjsObj = JSON.parse(iterobj);
+                        await appointment.find(
+                            {
+                                $and: [
+                                    { doctorId: reqdata.id },
+                                    { appointmentDate: reqdata.date },
+                                    { sessionTimings: reqdata.sessionsArr[i].session }
+                                ]
+                            },
+                            async (err, record) => {
 
-                            console.log(iterjsObj);
+                                const iterobj = JSON.stringify(record)
+                                const iterjsObj = JSON.parse(iterobj);
 
-                            if (iterjsObj.length >= 0 && iterjsObj.length < reqdata.limit) {
-                                freetimmings.push(reqdata.sessionsArr[i].session)
-                                console.log(freetimmings);
-                            }
-                            else {
-                                return res.status(200).json({ message: "got error from iteration" });
-                            }
-                        });
+                                console.log(iterjsObj);
+
+                                if (iterjsObj.length >= 0 && iterjsObj.length < reqdata.limit) {
+                                    freetimmings.push(reqdata.sessionsArr[i].session)
+                                    console.log(freetimmings);
+                                }
+                            })
                     }
                     return res.status(200).json({ message: "found the possibiity", freetimmings });
                 }
@@ -145,6 +146,18 @@ module.exports = {
                     return res.status(400).json({ message: "some error frmo database from finding the date" })
                 }
 
+            });
+    },
+
+    async GetAppointsForCalender(req, res) {
+        await appointment.find({
+            doctorId: req._id,
+        })
+            .then((record) => {
+                res.status(200).json({ message: 'appoint found for calender', record });
+            })
+            .catch((err) => {
+                res.status(400).json({ message: 'went wrong with finding !' });
             });
     }
 };

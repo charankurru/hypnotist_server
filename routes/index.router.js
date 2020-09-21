@@ -9,7 +9,9 @@ const ctrlSemi = require('../controllers/semiUser.controller');
 
 const dRCtrl = require('../controllers/doctor.controller');
 
-const appointCtrl = require('../controllers/appointment.controller')
+const appointCtrl = require('../controllers/appointment.controller');
+
+const DocDetails = require('../controllers/doctor-details.controller');
 
 const jwtHelper = require('../config/jwtHelper');
 
@@ -29,17 +31,17 @@ router.post('/updatefav', jwtHelper.verifyJwtToken, ctrlSemi.addfavdoctor)
 
 
 
-// Authentication for Doctor
+// Authentication for Doctor  getSingleDoctor
 router.post('/Dr.register', dRCtrl.register);
 router.post('/Dr.authenticate', dRCtrl.authenticate);
-router.get('/Dr.userProfile', jwtHelper.verifyJwtToken, dRCtrl.userProfile);
+router.get('/DR.getDoctorbyId/:id', jwtHelper.verifyJwtToken, dRCtrl.getSingleDoctors)
+
+router.get('/getSingleDoctor/:id', jwtHelper.verifyJwtToken, dRCtrl.getSingleDoctors)
+router.get('/getDoctorAppointments', jwtHelper.verifyJwtToken, dRCtrl.GetDocappointements)
+
 
 //getting Doctorslist
 router.get('/getDoctorsList', dRCtrl.getDoctors);
-
-//getting Single Doctor
-router.get('/getSingleDoctor/:id', dRCtrl.getSingleDoctors)
-
 
 //Requesting an Appointment
 router.post('/postappointment', jwtHelper.verifyJwtToken, appointCtrl.postappointment);
@@ -47,6 +49,14 @@ router.get('/getappointements', jwtHelper.verifyJwtToken, appointCtrl.getappoint
 
 //checking the posibilities of free time
 router.post('/checkpossible', appointCtrl.findPosibility);
+
+
+//post Doctor Details for Doctors  for updating profile
+router.post('/updateDocDet', jwtHelper.verifyJwtToken, DocDetails.PostDocDetails);
+
+//getting appointmentes for calender
+
+router.get('/GetAppointsForCalender', jwtHelper.verifyJwtToken, appointCtrl.GetAppointsForCalender);
 
 
 // post form
