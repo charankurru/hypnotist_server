@@ -8,6 +8,7 @@ const User = require("../models/user.model")
 const postfeed = require("../models/postfeedmodel");
 const appointment = require('../models/take-appoint.model');
 const doctor = require('../models/Doctor.model');
+const freetimmings = [];
 
 
 module.exports = {

@@ -18,7 +18,6 @@ var app = express();
 
 //DAtabase connection  'mongodb://localhost:27017/hypnotist'
 
-
 mongoose.connect(
   'mongodb://localhost:27017/hypnotist',
 );

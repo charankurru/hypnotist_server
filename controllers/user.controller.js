@@ -39,15 +39,15 @@ module.exports.authenticate = (req, res, next) => {
 };
 
 module.exports.google = (req, res, next) => {
-  googleUser.findOne({ googleId: req.body.googleId }, (err, user) => {
+  User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
       var newgoogleUser = req.body;
       console.log(newgoogleUser)
-      googleUser.create(req.body)
+      User.create(req.body)
         .then(result => {
           var payload = {
-            googleId: req.body.googleId,
-            username: req.body.username
+            _id: req.body.googleId,
+            fullName: req.body.username
           }
           var newToken = jwt.sign(payload, process.env.JWT_SECRET,
             {
@@ -60,8 +60,8 @@ module.exports.google = (req, res, next) => {
     else {
       console.log("user exists need to login");
       var payload = {
-        googleId: req.body.googleId,
-        username: req.body.username
+        _id: req.body.googleId,
+        fullName: req.body.username
       }
       var newToken = jwt.sign(payload, process.env.JWT_SECRET,
         {
