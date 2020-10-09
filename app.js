@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
-app.use('/api', rtsIndex);
+app.use('/', rtsIndex);
 app.use('/api', mesgIndex);
 app.use('/api', imageIndex);
 
