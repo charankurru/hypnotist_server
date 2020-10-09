@@ -8,7 +8,7 @@ const User = require("../models/user.model")
 const postfeed = require("../models/postfeedmodel");
 const appointment = require('../models/take-appoint.model');
 const doctor = require('../models/Doctor.model');
-const freetimmings = [];
+
 
 
 module.exports = {
@@ -84,7 +84,7 @@ module.exports = {
             limit: req.body.limitpatients,
             sessionsArr: req.body.sessArr,
         }
-        // console.log(reqdata);
+        console.log(reqdata);
         // console.log(reqdata.sessionsArr[0].session)
         const tresh = reqdata.sessionsArr.length;
         appointment.find({
@@ -111,7 +111,7 @@ module.exports = {
                 }
                 else if (jsObj.length > 0) {
                     // big function
-
+                    let freetimmings = [];
 
                     for (i = 0; i < tresh; i++) {
                         console.log("ok" + i);
