@@ -150,17 +150,20 @@ module.exports = {
   },
 
   async addfavdoctor(req, res) {
-    User.find(
+    User.find({ _id: req._id },
       {
         favlist: {
           $elemMatch: { favoneId: req.body._id },
         }
       }, async (err, result) => {
-        console.log(result);
-        if (result.length > 0) {
+
+        resultStr = JSON.stringify(result);
+        resultObj = JSON.parse(resultStr);
+        console.log(resultObj);
+        if (resultObj[0].favlist > 0) {
           return res.status(200).json({ message: "already added to fav" })
         }
-        else if (result.length <= 0) {
+        else if (resultObj[0].favlist.length <= 0) {
 
           User.update(
             { _id: req._id },

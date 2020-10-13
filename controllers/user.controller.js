@@ -39,15 +39,24 @@ module.exports.authenticate = (req, res, next) => {
 };
 
 module.exports.google = (req, res, next) => {
+
+  console.log(req.body)
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
-      var newgoogleUser = req.body;
+      var newgoogleUser = {
+        fullName: req.body.name,
+        email: req.body.email,
+        imgUrl: req.body.imgurl,
+        password: "kjsbdbfskjhvsbvskhbvsavbkbb@#@#"
+      }
       console.log(newgoogleUser)
-      User.create(req.body)
+      User.create(newgoogleUser)
         .then(result => {
           var payload = {
-            _id: req.body.googleId,
-            fullName: req.body.username
+            _id: result._id,
+            fullName: result.fullName,
+            email: result.email,
+            UserImg: result.UserImg
           }
           var newToken = jwt.sign(payload, process.env.JWT_SECRET,
             {
@@ -58,10 +67,12 @@ module.exports.google = (req, res, next) => {
         .catch(err => console.log("something problem in creating user"))
     }
     else {
-      console.log("user exists need to login");
+      console.log(user);
       var payload = {
-        _id: req.body.googleId,
-        fullName: req.body.username
+        _id: user._id,
+        fullName: req.body.name,
+        email: user.email,
+        UserImg: user.UserImg
       }
       var newToken = jwt.sign(payload, process.env.JWT_SECRET,
         {
@@ -70,7 +81,7 @@ module.exports.google = (req, res, next) => {
       return res.status(200).json({ message: "token provided after user verified", newToken });
     }
   });
-}
+};
 
 module.exports.userProfile = (req, res, next) => {
   User.findOne({ _id: req._id }, (err, user) => {

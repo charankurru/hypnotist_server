@@ -9,22 +9,13 @@ const path = require('path');
 const passport = require('passport');
 const _ = require('lodash');
 const mongoose = require('mongoose');
+var multer = require('multer');
 
 const rtsIndex = require('./routes/index.router');
 const mesgIndex = require('./routes/messages.router');
 const imageIndex = require('./routes/imageIndex');
 
 var app = express();
-
-//DAtabase connection  'mongodb://localhost:27017/hypnotist'
-
-// mongoose.connect(
-//   'mongodb://localhost:27017/hypnotist',
-// );
-
-// mongoose.connect(
-//   'mongodb+srv://charan:bharathi@cluster0-2hbtz.mongodb.net/chatapp?retryWrites=true&w=majority',
-// );
 
 // middleware
 app.use(express.json({ limit: '50mb' }));

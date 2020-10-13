@@ -19,6 +19,7 @@ const jwtHelper2 = require('../config/helpers');
 
 //Authentication for User
 router.post('/register', ctrlUser.register);
+router.post('/googleuser', ctrlUser.google)
 router.post('/authenticate', ctrlUser.authenticate);
 router.post('/google', ctrlUser.google);
 router.get('/userProfile', jwtHelper.verifyJwtToken, ctrlUser.userProfile);

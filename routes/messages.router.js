@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwtHelper = require('../config/jwtHelper');
 const msgCtrl = require('../controllers/messages.controller');
-const ImgCtrl = require('../controllers/images.Controllers');
+
 
 router.post(
   '/chat-messages/:sender_id/:receiver_Id',

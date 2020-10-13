@@ -19,6 +19,11 @@ var userSchema = new mongoose.Schema({
   },
   saltSecret: String,
 
+  UserImg: {
+    type: String,
+    default: "https://thumbs.dreamstime.com/b/faceless-businessman-avatar-man-suit-blue-tie-human-profile-userpic-face-features-web-picture-gentlemen-85824471.jpg"
+  },
+
   appointments: [
     {
       appointmentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Appointment' },
@@ -84,7 +89,7 @@ userSchema.methods.verifyPassword = function (password) {
 
 userSchema.methods.generateJwt = function () {
   return jwt.sign(
-    { _id: this._id, fullName: this.fullName },
+    { _id: this._id, fullName: this.fullName, email: this.email, UserImg: this.UserImg },
     process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_EXP,

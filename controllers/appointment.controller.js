@@ -106,15 +106,15 @@ module.exports = {
                     return res.status(200).json({ message: "All sessions are available", freetimmings })
                 }
                 else if (jsObj.length == (reqdata.limit * tresh)) {
-                    const data = []
-                    return res.status(200).json({ message: "All sessions are Filled", data })
+                    const freetimmings = []
+                    return res.status(200).json({ message: "All sessions are Filled", freetimmings })
                 }
                 else if (jsObj.length > 0) {
                     // big function
                     let freetimmings = [];
 
                     for (i = 0; i < tresh; i++) {
-                        console.log("ok" + i);
+                        console.log("ok" + i + reqdata.sessionsArr[i].session);
 
                         await appointment.find(
                             {
