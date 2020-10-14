@@ -46,7 +46,7 @@ module.exports.google = (req, res, next) => {
       var newgoogleUser = {
         fullName: req.body.name,
         email: req.body.email,
-        imgUrl: req.body.imgurl,
+        UserImg: req.body.imgurl,
         password: "kjsbdbfskjhvsbvskhbvsavbkbb@#@#"
       }
       console.log(newgoogleUser)

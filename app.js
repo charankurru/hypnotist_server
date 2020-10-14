@@ -9,11 +9,11 @@ const path = require('path');
 const passport = require('passport');
 const _ = require('lodash');
 const mongoose = require('mongoose');
-var multer = require('multer');
+
 
 const rtsIndex = require('./routes/index.router');
 const mesgIndex = require('./routes/messages.router');
-const imageIndex = require('./routes/imageIndex');
+
 
 var app = express();
 
@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use('/', rtsIndex);
 app.use('/api', mesgIndex);
-app.use('/api', imageIndex);
+
 
 //spcket
 const server = require('http').createServer(app);
